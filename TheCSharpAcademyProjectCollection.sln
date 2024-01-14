@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1-MathGame", "1-MathGame\1-MathGame.csproj", "{D1524DCF-F2F6-49AF-928F-CD56F147CD56}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2-Calculator", "2-Calculator\2-Calculator.csproj", "{B8545066-DBC7-4B67-A615-13E4D79C89DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HabitLogger", "HabitLogger\HabitLogger\HabitLogger.csproj", "{36788680-7867-45D8-AD39-D7D66CE81E0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1524DCF-F2F6-49AF-928F-CD56F147CD56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1524DCF-F2F6-49AF-928F-CD56F147CD56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1524DCF-F2F6-49AF-928F-CD56F147CD56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1524DCF-F2F6-49AF-928F-CD56F147CD56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8545066-DBC7-4B67-A615-13E4D79C89DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8545066-DBC7-4B67-A615-13E4D79C89DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8545066-DBC7-4B67-A615-13E4D79C89DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8545066-DBC7-4B67-A615-13E4D79C89DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36788680-7867-45D8-AD39-D7D66CE81E0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36788680-7867-45D8-AD39-D7D66CE81E0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36788680-7867-45D8-AD39-D7D66CE81E0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36788680-7867-45D8-AD39-D7D66CE81E0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
