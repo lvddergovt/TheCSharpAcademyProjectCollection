@@ -7,13 +7,13 @@ using MathGame;
 /// </summary>
 public class Program
 {
-  /// <summary>
-  /// The main method that starts the Math Game.
-  /// </summary>
-  /// <param name="args">The command-line arguments.</param>
-  static void Main(string[] args)
-  {
-    Game game = new Game();
-    game.StartGame();
-  }
+    /// <summary>
+    /// The main method that starts the Math Game.
+    /// </summary>
+    /// <param name="args">The command-line arguments.</param>
+    static void Main(string[] args)
+    {
+        Game game = new Game();
+        game.StartGame();
+    }
 }
