@@ -1,10 +1,12 @@
-﻿
+
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Microsoft.Data.Sqlite;
 using SQLitePCL;
 
+// Todo: restart this project as it doesnt build correctly
+// use visual studio create console app instead
 namespace HabitLogger
 {
     class Program
