@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1-MathGame", "1-MathGame\1-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2-Calculator", "2-Calculator\2-Calculator.csproj", "{B8545066-DBC7-4B67-A615-13E4D79C89DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitLogger", "HabitLogger\HabitLogger.csproj", "{86FDE49F-B0CD-4E4F-B9E0-F107732A3A78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B8545066-DBC7-4B67-A615-13E4D79C89DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8545066-DBC7-4B67-A615-13E4D79C89DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8545066-DBC7-4B67-A615-13E4D79C89DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86FDE49F-B0CD-4E4F-B9E0-F107732A3A78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86FDE49F-B0CD-4E4F-B9E0-F107732A3A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86FDE49F-B0CD-4E4F-B9E0-F107732A3A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86FDE49F-B0CD-4E4F-B9E0-F107732A3A78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
