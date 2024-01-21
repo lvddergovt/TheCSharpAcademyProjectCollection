@@ -71,15 +71,15 @@ namespace HabitLogger
                         break;
                     case 2:
                         // delete a habit
-                        // DeleteHabit();
+                        DeleteHabit();
                         break;
                     case 3:
                         // update a habit
-                        // UpdateHabit();
+                        UpdateHabit();
                         break;
                     case 4:
                         // view all habits
-                        // ViewAllHabits();
+                        ViewAllHabits();
                         break;
                     case 0:
                         // exit the application
@@ -144,6 +144,93 @@ namespace HabitLogger
             Console.ReadKey();
         }
 
+        // create DeleteHabit() method
+        private static void DeleteHabit()
+        {
+            Console.Clear();
+            Console.WriteLine("Delete a record");
+
+            Console.WriteLine("Please enter the id of the record you want to delete:");
+            int id = int.Parse(Console.ReadLine());
+
+            // delete the record from the database
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+
+                command.CommandText =
+                    $@"DELETE FROM practice_guitar WHERE Id = {id}";
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
+
+            Console.WriteLine("Record deleted successfully!");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+
+        // create UpdateHabit() method
+        private static void UpdateHabit()
+        {
+            Console.Clear();
+            Console.WriteLine("Update a record");
+
+            Console.WriteLine("Please enter the id of the record you want to update:");
+            int id = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Please enter the new quantity:");
+            int quantity = int.Parse(Console.ReadLine());
+
+            // update the record in the database
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+
+                command.CommandText =
+                    $@"UPDATE practice_guitar SET Quantity = {quantity} WHERE Id = {id}";
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
+
+            Console.WriteLine("Record updated successfully!");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+
+        // create ViewAllHabits() method
+        private static void ViewAllHabits()
+        {
+            Console.Clear();
+            Console.WriteLine("View all records");
+
+            // view all records from the database
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+
+                command.CommandText =
+                    $@"SELECT * FROM practice_guitar";
+
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Id: {reader["Id"]}, Date: {reader["Date"]}, Quantity: {reader["Quantity"]}");
+                }
+
+                connection.Close();
+            }
+
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
 
     }
 }
