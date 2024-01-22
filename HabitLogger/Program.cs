@@ -36,7 +36,7 @@ namespace HabitLogger
                 var tableCommand = connection.CreateCommand();
 
                 tableCommand.CommandText =
-                    @"CREATE TABLE IF NOT EXISTS practice_guitar(
+                    @"CREATE TABLE IF NOT EXISTS read(
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     Date TEXT,
                     Quantity INTEGER
@@ -81,6 +81,10 @@ namespace HabitLogger
                         // view all habits
                         ViewAllHabits();
                         break;
+                    // case 5:
+                    //     // add a new habit to the db
+                    //     AddNewHabit();
+                    //     break;
                     case 0:
                         // exit the application
                         closeApp = true;
@@ -105,6 +109,7 @@ namespace HabitLogger
             Console.WriteLine("2. Delete record");
             Console.WriteLine("3. Update record");
             Console.WriteLine("4. View all records");
+            // Console.WriteLine("5. Add a new habit");
             Console.WriteLine("0. Exit the application");
 
             // get user input
@@ -117,7 +122,7 @@ namespace HabitLogger
         private static void InsertRecord()
         {
             Console.Clear();
-            Console.WriteLine("Insert a new record");
+            Console.WriteLine("How many pages did you read today?");
 
             // todays date
             string date = DateTime.Now.ToString("yyyy-MM-dd");
@@ -132,7 +137,7 @@ namespace HabitLogger
                 var command = connection.CreateCommand();
 
                 command.CommandText =
-                    $@"INSERT INTO practice_guitar (Date, Quantity) VALUES ('{date}', {quantity})";
+                    $@"INSERT INTO read (Date, Quantity) VALUES ('{date}', {quantity})";
 
                 command.ExecuteNonQuery();
 
@@ -140,6 +145,7 @@ namespace HabitLogger
             }
 
             Console.WriteLine("Record inserted successfully!");
+            Console.WriteLine("-----------------------------");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
@@ -160,7 +166,7 @@ namespace HabitLogger
                 var command = connection.CreateCommand();
 
                 command.CommandText =
-                    $@"DELETE FROM practice_guitar WHERE Id = {id}";
+                    $@"DELETE FROM read WHERE Id = {id}";
 
                 command.ExecuteNonQuery();
 
@@ -191,7 +197,7 @@ namespace HabitLogger
                 var command = connection.CreateCommand();
 
                 command.CommandText =
-                    $@"UPDATE practice_guitar SET Quantity = {quantity} WHERE Id = {id}";
+                    $@"UPDATE read SET Quantity = {quantity} WHERE Id = {id}";
 
                 command.ExecuteNonQuery();
 
@@ -216,7 +222,7 @@ namespace HabitLogger
                 var command = connection.CreateCommand();
 
                 command.CommandText =
-                    $@"SELECT * FROM practice_guitar";
+                    $@"SELECT * FROM read";
 
                 var reader = command.ExecuteReader();
 
@@ -232,5 +238,33 @@ namespace HabitLogger
             Console.ReadKey();
         }
 
+        // create AddNewHabit() method
+        private static void AddNewHabit()
+        {
+            Console.Clear();
+            Console.WriteLine("Add a new habit");
+
+            Console.WriteLine("Please enter the name of the habit:");
+            string name = Console.ReadLine();
+
+            // insert the record into the database
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+
+                command.CommandText =
+                    $@"INSERT INTO habit (Name) VALUES ('{name}')";
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
+
+            Console.WriteLine("Habit added successfully!");
+            Console.WriteLine("-----------------------------");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
     }
 }
