@@ -81,10 +81,10 @@ namespace HabitLogger
                         // view all habits
                         ViewAllHabits();
                         break;
-                    // case 5:
-                    //     // add a new habit to the db
-                    //     AddNewHabit();
-                    //     break;
+                    case 5:
+                        // get the amount of pages read last week
+                        GetPagesReadLastWeek();
+                        break;
                     case 0:
                         // exit the application
                         closeApp = true;
@@ -96,8 +96,6 @@ namespace HabitLogger
                 }
             }
             return -1;
-
-
         }
 
         // create dislayManu() method
@@ -109,11 +107,12 @@ namespace HabitLogger
             Console.WriteLine("2. Delete record");
             Console.WriteLine("3. Update record");
             Console.WriteLine("4. View all records");
-            // Console.WriteLine("5. Add a new habit");
+            Console.WriteLine("5. Statistic: Pages read last week");
             Console.WriteLine("0. Exit the application");
 
             // get user input
             int input = int.Parse(Console.ReadLine());
+
 
             return input;
         }
@@ -184,6 +183,9 @@ namespace HabitLogger
             Console.Clear();
             Console.WriteLine("Update a record");
 
+            // show all records
+            ViewAllHabits();
+
             Console.WriteLine("Please enter the id of the record you want to update:");
             int id = int.Parse(Console.ReadLine());
 
@@ -238,31 +240,34 @@ namespace HabitLogger
             Console.ReadKey();
         }
 
-        // create AddNewHabit() method
-        private static void AddNewHabit()
+        // add a method which gets the amount of pages read last week
+        private static void GetPagesReadLastWeek()
         {
             Console.Clear();
-            Console.WriteLine("Add a new habit");
+            Console.WriteLine("Pages read last week");
 
-            Console.WriteLine("Please enter the name of the habit:");
-            string name = Console.ReadLine();
+            // get the date from last week
+            DateTime lastWeek = DateTime.Now.AddDays(-7);
 
-            // insert the record into the database
+            // view all records from the database
             using (var connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
                 var command = connection.CreateCommand();
 
                 command.CommandText =
-                    $@"INSERT INTO habit (Name) VALUES ('{name}')";
+                    $@"SELECT SUM(Quantity) AS TotalQuantity FROM read WHERE Date >= '{lastWeek}'";
 
-                command.ExecuteNonQuery();
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Pages read last week: {reader["TotalQuantity"]}");
+                }
 
                 connection.Close();
             }
 
-            Console.WriteLine("Habit added successfully!");
-            Console.WriteLine("-----------------------------");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
