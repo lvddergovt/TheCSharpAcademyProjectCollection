@@ -1,59 +1,172 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodingTracker;
+using System.Globalization;
+using Spectre.Console;
 
-public class CodingController
+namespace CodingTracker
 {
-    // Constructor
-    public CodingController()
+    /// <summary>
+    /// Represents a controller for managing coding sessions.
+    /// </summary>
+    public class CodingSessionController
     {
-        // Initialization, if needed
-    }
-
-    // Method to create a new coding session
-    public void CreateCodingSession(DateTime startTime, DateTime endTime)
-    {
-        // Validate start and end times
-        if (startTime >= endTime)
+        // Constructor
+        public CodingSessionController()
         {
-            Console.WriteLine("End time must be after start time.");
-            return;
+
         }
 
-        // Calculate duration
-        TimeSpan duration = CalculateDuration(startTime, endTime);
 
-        // Create a new coding session
-        CodingSession newSession = new CodingSession
+        /// <summary>
+        /// Creates a new coding session with the specified start and end times.
+        /// </summary>
+        /// <param name="startTime">The start time of the coding session.</param>
+        /// <param name="endTime">The end time of the coding session.</param>
+        public void CreateCodingSession(DateTime startTime, DateTime endTime)
         {
-            StartTime = startTime,
-            EndTime = endTime,
-            Duration = duration
-        };
+            // Validate start and end times
+            if (startTime >= endTime)
+            {
+                Console.WriteLine("End time must be after start time.");
+                return;
+            }
 
-        // Add the new session to the database
-        using (var context = new CodingTrackerContext())
-        {
-            context.CodingSessions.Add(newSession);
-            context.SaveChanges();
+            // Calculate duration
+            TimeSpan duration = CalculateDuration(startTime, endTime);
+
+            // Create a new coding session
+            CodingSession newSession = new CodingSession
+            {
+                StartTime = startTime,
+                EndTime = endTime,
+                Duration = duration,
+
+            };
+
+            // Add the new session to the database
+            AddCodingSessionToDatabase(newSession);
         }
-    }
 
-    // Method to calculate the duration of a coding session
-    private TimeSpan CalculateDuration(DateTime start, DateTime end)
-    {
-        return end - start;
-    }
 
-    // Method to retrieve all coding sessions
-    public List<CodingSession> GetAllCodingSessions()
-    {
-        using (var context = new CodingTrackerContext())
+        /// <summary>
+        /// Creates a new coding session based on user input for date, start time, and end time.
+        /// </summary>
+        public void CreateCodingSession()
         {
-            return context.CodingSessions.ToList();
-        }
-    }
 
-    // (Other methods as needed, e.g., update or delete sessions)
+            // ask the user if he wants to use the current date
+            Console.WriteLine("Do you want to use the current date? (Y/n)");
+            string useCurrentDate = Console.ReadLine();
+            string dateRaw;
+
+            // if the user wants to use the current date, set the date to the current date
+            if (useCurrentDate.ToLower() == "y")
+            {
+                dateRaw = DateTime.Now.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                Console.WriteLine("Enter the date (yyyy-MM-dd):");
+                dateRaw = Console.ReadLine();
+            }
+
+            Console.WriteLine("Enter the start time (HH:mm):");
+            string startTimeRaw = Console.ReadLine();
+
+            Console.WriteLine("Enter the end time (HH:mm):");
+            string endTimeRaw = Console.ReadLine();
+
+            DateTime startTime = DateTime.ParseExact(dateRaw + " " + startTimeRaw, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+            DateTime endTime = DateTime.ParseExact(dateRaw + " " + endTimeRaw, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+
+            // Calculate duration
+            TimeSpan duration = CalculateDuration(startTime, endTime);
+
+            // Create a new coding session
+            CodingSession newSession = new CodingSession
+            {
+                StartTime = startTime,
+                EndTime = endTime,
+                Duration = duration
+            };
+
+            CreateCodingSession(startTime, endTime);
+        }
+
+        /// <summary>
+        /// Adds a coding session to the database.
+        /// </summary>
+        /// <param name="session">The coding session to be added.</param>
+        private void AddCodingSessionToDatabase(CodingSession session)
+        {
+            AnsiConsole.Status()
+                .Start("Saving...", ctx =>
+                {
+                    // Update the status and spinner
+                    ctx.Status("Creating coding session...");
+                    ctx.Spinner(Spinner.Known.Star);
+                    ctx.SpinnerStyle(Style.Parse("green"));
+
+                    Thread.Sleep(2000);
+                });
+
+            using (var context = new CodingTrackerContext())
+            {
+                context.CodingSessions.Add(session);
+                context.SaveChanges();
+            }
+
+            AnsiConsole.MarkupLine("[green]Coding session created![/]");
+        }
+
+
+        /// <summary>
+        /// Calculates the duration between two DateTime values.
+        /// </summary>
+        /// <param name="start">The starting DateTime value.</param>
+        /// <param name="end">The ending DateTime value.</param>
+        /// <returns>The TimeSpan representing the duration between the start and end DateTime values.</returns>
+        private TimeSpan CalculateDuration(DateTime start, DateTime end)
+        {
+            return end - start;
+        }
+
+
+        /// <summary>
+        /// Retrieves all coding sessions from the database.
+        /// </summary>
+        /// <returns>A list of coding sessions sorted by newest first.</returns>
+        public List<CodingSession> GetAllCodingSessions()
+        {
+            using (var context = new CodingTrackerContext())
+            {
+                // sort by newest first
+                return context.CodingSessions.OrderByDescending(s => s.StartTime).ToList();
+            }
+        }
+
+
+        /// <summary>
+        /// Displays all coding sessions in a table format.
+        /// </summary>
+        public void DisplayAllCodingSessions()
+        {
+            var table = new Table();
+
+            table.AddColumn("[bold]Start Time[/]");
+            table.AddColumn("[bold]End Time[/]");
+            table.AddColumn("[bold]Duration[/]");
+
+            List<CodingSession> codingSessions = GetAllCodingSessions();
+
+            foreach (CodingSession session in codingSessions)
+            {
+                table.AddRow(session.Id.ToString(), session.StartTime.ToString(), session.EndTime.ToString(), session.Duration.ToString());
+            }
+
+            AnsiConsole.Render(table);
+        }
+
+    }
 }

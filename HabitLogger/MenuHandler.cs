@@ -77,6 +77,5 @@ namespace HabitLogger
             return -1;
         }
 
-        // Other menu operations
     }
 }

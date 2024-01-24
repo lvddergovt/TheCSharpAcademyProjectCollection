@@ -31,6 +31,5 @@ namespace HabitLogger
             }
         }
 
-        // Other database operations
     }
 }

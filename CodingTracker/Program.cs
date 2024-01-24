@@ -1,16 +1,15 @@
-﻿using Spectre.Console;
-
+﻿
 namespace CodingTracker
 {
-  class Program
-  {
-    static void Main(string[] args)
-    {
+	class Program
+	{
+		static void Main(string[] args)
+		{
 
+			var codingSessionController = new CodingSessionController();
+			var consoleMenu = new ConsoleMenu(codingSessionController);
+			consoleMenu.DisplayMenu();
 
-
-
-      AnsiConsole.Render(new FigletText("Coding Tracker").Centered().Color(Color.Green));
-    }
-  }
+		}
+	}
 }
