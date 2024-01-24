@@ -11,6 +11,8 @@ namespace CodingTracker
 
         public string? Description { get; set; }
 
+        public string? ProgrammingLanguage { get; set; }
+
         public DateTime StartTime { get; set; }
 
         public DateTime EndTime { get; set; }

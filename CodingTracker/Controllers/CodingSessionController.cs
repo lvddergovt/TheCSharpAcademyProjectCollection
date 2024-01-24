@@ -35,13 +35,16 @@ namespace CodingTracker
             // Calculate duration
             TimeSpan duration = CalculateDuration(startTime, endTime);
 
+            // Get the programming language
+            var programmingLanguage = GetProgrammingLanguage();
+
             // Create a new coding session
             CodingSession newSession = new CodingSession
             {
                 StartTime = startTime,
                 EndTime = endTime,
                 Duration = duration,
-
+                ProgrammingLanguage = programmingLanguage
             };
 
             // Add the new session to the database
@@ -82,14 +85,6 @@ namespace CodingTracker
 
             // Calculate duration
             TimeSpan duration = CalculateDuration(startTime, endTime);
-
-            // Create a new coding session
-            CodingSession newSession = new CodingSession
-            {
-                StartTime = startTime,
-                EndTime = endTime,
-                Duration = duration
-            };
 
             CreateCodingSession(startTime, endTime);
         }
@@ -146,6 +141,42 @@ namespace CodingTracker
             }
         }
 
+        // a method where the console asks the user if he wants to specify which programming language he used
+        // if yes, ask the user to enter the programming language
+        // if no, set the programming language to "N/A"
+        // return the programming language
+        public string GetProgrammingLanguage()
+        {
+            Console.WriteLine("Do you want to specify which programming language you used? (Y/n)");
+            string specifyProgrammingLanguage = Console.ReadLine();
+            string programmingLanguage;
+
+            // Todo: add more programming languages
+            var programmingLanguages = new string[] { "javascript", "c#", "vue", "react" };
+
+            // if yes, let the user pick a programming language from a predefined list
+            // use a Ansi Console selection list to make the user pick a programming language
+            if (specifyProgrammingLanguage.ToLower() == "y")
+            {
+                AnsiConsole.MarkupLine("[green]Pick a programming language:[/]");
+                var selection = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .PageSize(10)
+                        .AddChoices(programmingLanguages)
+                        .Title("[bold]Programming Languages[/]")
+                        .MoreChoicesText("[grey](Move up and down to reveal more programming languages)[/]")
+                        .HighlightStyle("green")
+                );
+                programmingLanguage = selection;
+            }
+            else
+            {
+                programmingLanguage = "N/A";
+            }
+
+            return programmingLanguage;
+        }
+
 
         /// <summary>
         /// Displays all coding sessions in a table format.
@@ -157,16 +188,27 @@ namespace CodingTracker
             table.AddColumn("[bold]Start Time[/]");
             table.AddColumn("[bold]End Time[/]");
             table.AddColumn("[bold]Duration[/]");
+            table.AddColumn("[bold]Programming Language[/]");
 
             List<CodingSession> codingSessions = GetAllCodingSessions();
 
+
+
             foreach (CodingSession session in codingSessions)
             {
-                table.AddRow(session.Id.ToString(), session.StartTime.ToString(), session.EndTime.ToString(), session.Duration.ToString());
+                table.AddRow(
+                    session.StartTime.ToString(),
+                    session.EndTime.ToString(),
+                    session.Duration.ToString(),
+                    session.ProgrammingLanguage ?? ""
+                );
             }
 
             AnsiConsole.Render(table);
+
         }
+
+
 
     }
 }
