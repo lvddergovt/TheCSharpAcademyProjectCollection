@@ -23,7 +23,7 @@ namespace HabitLogger
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     Date TEXT,
                     Quantity INTEGER
-                )";  // Also, removed the trailing comma from 'Quantity INTEGER,'
+                )";
 
                 tableCommand.ExecuteNonQuery();
 
