@@ -107,5 +107,20 @@ namespace CodingTracker
 
             return programmingLanguage;
         }
+
+
+        /// <summary>
+        /// Removes a coding session from the database by its ID.
+        /// </summary>
+        /// <param name="sessionId">The ID of the coding session to remove.</param>
+        public void RemoveCodingSessionById(int sessionId)
+        {
+            using (var context = new CodingTrackerContext())
+            {
+                var sessionToRemove = context.CodingSessions.Find(sessionId);
+                context.CodingSessions.Remove(sessionToRemove);
+                context.SaveChanges();
+            }
+        }
     }
 }

@@ -50,6 +50,7 @@ namespace CodingTracker
                         break;
                     case "3":
                         // Remove Coding Session
+                        _codingSessionController.RemoveCodingSession();
                         break;
                     case "4":
                         // View All Coding Sessions

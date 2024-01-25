@@ -98,5 +98,43 @@ namespace CodingTracker
             AnsiConsole.Render(table);
 
         }
+
+        /// <summary>
+        /// Removes a coding session by prompting the user for the session ID and calling the appropriate service method.
+        /// </summary>
+        public void RemoveCodingSession()
+        {
+            List<CodingSession> codingSessions = _codingSessionService.GetAllCodingSessions();
+
+            var table = new Table();
+
+            table.AddColumn("[bold]Id[/]");
+            table.AddColumn("[bold]Start Time[/]");
+            table.AddColumn("[bold]End Time[/]");
+            table.AddColumn("[bold]Duration[/]");
+            table.AddColumn("[bold]Programming Language[/]");
+
+            foreach (CodingSession session in codingSessions)
+            {
+                table.AddRow(
+                    session.Id.ToString(),
+                    session.StartTime.ToString(),
+                    session.EndTime.ToString(),
+                    session.Duration.ToString(),
+                    session.ProgrammingLanguage ?? ""
+                );
+            }
+
+            AnsiConsole.Write(table);
+
+            // enter the id of the coding session you want to remove
+            Console.WriteLine("Enter the id of the coding session you want to remove:");
+            string sessionId = Console.ReadLine();
+
+            // sessionId the id to the service, it expects an int
+            _codingSessionService.RemoveCodingSessionById(int.Parse(sessionId));
+
+            AnsiConsole.MarkupLine("[green]Coding session removed![/]");
+        }
     }
 }
