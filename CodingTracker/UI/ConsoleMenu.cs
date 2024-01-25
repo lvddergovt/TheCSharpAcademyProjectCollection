@@ -43,7 +43,7 @@ namespace CodingTracker
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        _codingSessionController.CreateCodingSession();
+                        _codingSessionController.CreateCodingSessionFromUserInput();
                         break;
                     case "2":
                         // Edit Coding Session
