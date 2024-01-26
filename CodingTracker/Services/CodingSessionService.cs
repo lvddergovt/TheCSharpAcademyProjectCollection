@@ -83,7 +83,7 @@ namespace CodingTracker
             string programmingLanguage;
 
             // Todo: add more programming languages
-            var programmingLanguages = new string[] { "javascript", "c#", "vue", "react" };
+            var programmingLanguages = new string[] { "javascript", "c#", "vue", "react", "python", "java", "typescript", "php" };
 
             // if yes, let the user pick a programming language from a predefined list
             // use a Ansi Console selection list to make the user pick a programming language
