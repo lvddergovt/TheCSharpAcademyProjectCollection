@@ -127,9 +127,14 @@ namespace CodingTracker
 
             AnsiConsole.Write(table);
 
-            // enter the id of the coding session you want to remove
-            Console.WriteLine("Enter the id of the coding session you want to remove:");
+            Console.WriteLine("Enter the id of the coding session you want to remove. Enter C to cancel.");
             string sessionId = Console.ReadLine();
+
+            // if sessionId is empty or c, cancel
+            if (string.IsNullOrEmpty(sessionId) || sessionId.ToLower() == "c")
+            {
+                return;
+            }
 
             // sessionId the id to the service, it expects an int
             _codingSessionService.RemoveCodingSessionById(int.Parse(sessionId));
