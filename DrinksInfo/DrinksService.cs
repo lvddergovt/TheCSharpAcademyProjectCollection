@@ -33,15 +33,15 @@ namespace DrinksInfo
         {
             var client = new RestClient("https://www.thecocktaildb.com/api/json/v1/1/");
             var request = new RestRequest($"filter.php?c={HttpUtility.UrlEncode(category)}");
-            var response = client.Execute(request);
+            var response = client.ExecuteAsync(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                string rawResponse = response.Content;
+                string rawResponse = response.Result.Content;
                 var serialize = JsonConvert.DeserializeObject<Drinks>(rawResponse);
 
                 List<Drink> returnedList = serialize.DrinksList;
-
+                
                 TableVisualisationEngine tableVisualisationEngine = new();
                 tableVisualisationEngine.ShowTable(returnedList, "Drinks menu");
             }
