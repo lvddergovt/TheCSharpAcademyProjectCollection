@@ -13,10 +13,13 @@ namespace CodingTracker
     {
         private readonly CodingSessionService _codingSessionService;
 
+        public DateTime Date { get; set; }
+
         // Constructor
         public CodingSessionController()
         {
             _codingSessionService = new CodingSessionService();
+            Date = DateTime.Now;
         }
 
         /// <summary>
